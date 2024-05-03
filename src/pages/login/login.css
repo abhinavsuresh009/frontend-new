@@ -1,0 +1,26 @@
+@media screen and (min-width: 1024px) {
+    .custom-width {
+      width: 400px;
+      margin-top: 200px;
+
+      
+    }
+    .custom-font{
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+  }
+@media screen and (max-width: 1024px) {
+    .custom-width {
+      margin-top: 80px;
+      
+    }
+  }
+  .arrow_none{
+    
+      [type=number]::-webkit-inner-spin-button,
+      [type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }  
+  }

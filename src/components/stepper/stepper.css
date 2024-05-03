@@ -1,0 +1,10 @@
+.step-item:not(:first-child):before{
+    content: '';
+    background-color: rgb(135, 147, 159); /* Change to your desired color */
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    right: 50%;
+    top: 33.333%; /* Adjust as needed */
+    transform: translateY(-50%);
+  }
