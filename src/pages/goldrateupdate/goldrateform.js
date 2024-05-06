@@ -14,8 +14,7 @@ function GoldRateForm(props) {
         formState: { errors },
     } = useForm();
     const { baseurl } = useContext(AppContext)
-    // let endpoint = '/user/login';
-    const url = `${baseurl}goldrate/goldrate/`;
+    const url = `${baseurl}/goldrate/goldrate/`;
 
 
     const onSubmit = async (data) => {

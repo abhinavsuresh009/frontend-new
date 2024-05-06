@@ -8,7 +8,7 @@ import { AppContext } from '../../context/appContext';
 
 function LoginForm(props) {
     const { baseurl } = useContext(AppContext);
-    const url = `${baseurl}user/login/`;
+    const url = `${baseurl}/user/login/`;
     const classes = 'form-control mt-4 block justify-between ps-2 w-full'
     const {
         register,

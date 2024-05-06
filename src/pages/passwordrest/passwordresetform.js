@@ -5,7 +5,7 @@ import { Title } from '../../titles/titles';
 import { AppContext } from '../../context/appContext';
 function PasswordResetForm(props) {
     const { baseurl } = useContext(AppContext)
-    const url = `${baseurl}user/update-password/`;
+    const url = `${baseurl}/user/update-password/`;
     const classes = 'form-control mt-4 block justify-between ps-2 w-full arrow_none'
     const {
         register,
