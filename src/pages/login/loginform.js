@@ -26,7 +26,6 @@ function LoginForm(props) {
                 },
                 body: JSON.stringify(data)
             })
-            console.log(response)
             const result = await response.json();
             // reset()
             if (response.status === 400) {

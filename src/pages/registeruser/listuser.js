@@ -1,53 +1,90 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import DashBoard from '../../components/DashBoard';
 import { Title } from '../../titles/titles';
 import { Table } from '../../components/table/Table';
-import { AppContext } from '../../context/appContext';
 import Pagination from '../../components/Pagination';
-function UserList(props) {
-    const [data, setData] = useState([]);
-    const [totalItems, setTotalItems] = useState(0); // Track total number of items
-    const [currentPage, setCurrentPage] = useState(1); // Track current page
-    const column = ['USERNAME','PHONE', 'EMAIL', 'BRANCH CODE', 'COMPANY CODE']
-    const datakey = ['username','phone', 'email', 'brcode', 'comcode']
-    const itemsPerPage = 2; // Define the number of items per page
-    let { baseurl } = useContext(AppContext)
+import { AppContext } from '../../context/appContext';
 
-    useEffect(() => {
-      // Fetch data for the current page when component mounts or currentPage changes
-      fetchUser(currentPage); 
-    }, [baseurl, currentPage]);
-  
-    const fetchUser = async (page) => {
-      try {
-        const response = await fetch(`${baseurl}/user/create-user/?page=${page}`);
-        const jsonData = await response.json();
-        setData(jsonData.results.data);
-        setTotalItems(jsonData.count); // Update totalItems based on the total number of items received
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-  
-    const handleSetActivePage = (pageNumber) => {
-      setCurrentPage(pageNumber);
-    };
-  
-    return (
-      <div>
-        <DashBoard />
-        <Title title="User List" />
-        <Table TABLE_ROWS={data} datakey={datakey} HEAD={column} />
-  
-        {/* Pagination controls */}
-        <Pagination
-          totalItems={totalItems} // Pass the dynamically calculated total number of items
-          itemsPerPage={itemsPerPage} // Pass the number of items per page
-          activePage={currentPage} // Pass the current active page
-          setActivePage={handleSetActivePage} // Pass the function to set active page
-        />
+function UserList() {
+  const [brcode, setBrcode] = useState('');
+  const [comcode, setComcode] = useState('');
+  const [userName, setUserName] = useState('');
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+  let { baseurl } = useContext(AppContext)
+  const column = ['USERNAME','PHONE', 'EMAIL', 'BRANCH CODE', 'COMPANY CODE']
+  const datakey = ['username','phone', 'email', 'brcode', 'comcode']
+
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${baseurl}/user/create-user/?page=`, {
+        params: {
+          comcode: comcode,
+          brcode: brcode,
+          user_name: userName,
+          page: currentPage
+        }
+      });
+      setUsers(response.data.results.data);
+      setTotalItems(response.data.count);
+      setError('');
+    } catch (error) {
+      setError(error.response.data.error);
+      setUsers([]);
+    }
+    setLoading(false);
+  };
+
+  const handleSetActivePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [brcode, comcode, userName, currentPage]);
+
+  const handleReset = () => {
+    setBrcode('');
+    setComcode('')
+    setUserName('');
+  };
+  return (
+    <div>
+      <DashBoard />
+      <Title title="Users" />
+      <div className=" flex w-11/12 ml-auto mr-auto mt-5 text-left flex-wrap gap-x-4">
+        <div className="flex items-center">
+          <label className="mr-2">Company Code:</label>
+          <input type="text" value={comcode} onChange={(e) => setComcode(e.target.value)} className="border rounded px-2 py-1" />
+        </div>
+        <div className="flex items-center">
+          <label className="mr-2">Branch Code:</label>
+          <input type="text" value={brcode} onChange={(e) => setBrcode(e.target.value)} className="border rounded px-2 py-1" />
+        </div>
+        <div className="flex items-center">
+          <label className="mr-2">User Name:</label>
+          <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="border rounded px-2 py-1" />
+        </div>
+        <button onClick={handleReset} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Reset</button>
       </div>
-    );
-  }
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      <Table TABLE_ROWS={users} datakey={datakey} HEAD={column} />      
+      <Pagination
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        activePage={currentPage}
+        setActivePage={handleSetActivePage}
+      />
+    </div>
+  );
+}
 
 export default UserList;
+

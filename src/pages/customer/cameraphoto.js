@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import './camera.css'
 
 const CameraCapture = () => {
   const [imageData, setImageData] = useState(null);
@@ -29,7 +30,7 @@ const CameraCapture = () => {
     try {
       const blob = await fetch(imageData).then(response => response.blob());
       const formData = new FormData();
-      formData.append('image', blob, 'image.jpg');
+      formData.append('image', blob, '');
       const response = await axios.post(url, formData);
       console.log('Image uploaded successfully:', response.data);
     } catch (error) {
@@ -41,12 +42,13 @@ const CameraCapture = () => {
       <div className='flex justify-around mt-10'>
         <input
           type="file"
+          className='camerainp'
           accept="image/*"
           capture="environment"
           onChange={handleFileUpload}
         />
-        <button onClick={startCamera} className={isPC ? 'hidden' : ''}>Access Camera</button>
-        <button onClick={capturePicture} className={isPC ? '' : 'hidden'}>Capture Picture</button>
+        <button id='accesscam' onClick={startCamera} className={isPC ? 'hidden' : ''}>Access Camera</button>
+        <button id='capture' onClick={capturePicture} className={isPC ? '' : 'hidden'}>Capture Picture</button>
         <button onClick={saveImage}
           type="button"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"

@@ -19,7 +19,7 @@ function Pagination({ totalItems, itemsPerPage, activePage, setActivePage }) {
   };
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center mt-10 items-center gap-4">
       <Button
         variant="text"
         className="flex items-center gap-2"

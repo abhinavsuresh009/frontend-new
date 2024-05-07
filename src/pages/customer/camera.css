@@ -1,0 +1,22 @@
+
+@media screen and (min-width: 767px) {
+    .camerainp{
+
+        display: none;
+    }
+  
+  }
+
+@media screen and (max-width: 767px) {
+   
+  
+  }
+  button{
+    background: rgb(89, 141, 220);
+    border-radius: 5px;
+    height: 40px;
+    color: white;
+    font-weight: 700;
+    padding: 4px;
+
+  }

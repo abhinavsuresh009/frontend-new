@@ -29,11 +29,7 @@ function RegisterForm(props) {
             console.log(response)
             const result = await response.json(Object.values);
             const values = Object.values(result);
-            // alert(JSON.stringify(values));
-            // console.log(result)
-
             if (response.status === 400) {
-                // console.log(typeof (result.error))
                 for (const [key, value] of Object.entries(result.error)) {
                     setError(key, {
                         type: 'server',
@@ -211,7 +207,6 @@ function RegisterForm(props) {
                             required
                         />
                     </div>
-                    {/* <button type="button" className={ClassNames.ButtonSuccess}> Submit</button> */}
                     <div className='md:flex justify-end pr-10 sm: ml-10'>
 
                         <div className="flex justify-center mt-5 md:pr-10">
