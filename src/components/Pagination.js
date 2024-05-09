@@ -5,19 +5,16 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 function Pagination({ totalItems, itemsPerPage, activePage, setActivePage }) {
   const numberOfPages = Math.ceil(totalItems / itemsPerPage);
   console.log('number of page',totalItems)
-
   const next = () => {
     if (activePage < numberOfPages) {
       setActivePage(activePage + 1);
     }
   };
-
   const prev = () => {
     if (activePage > 1) {
       setActivePage(activePage - 1);
     }
   };
-
   return (
     <div className="flex justify-center mt-10 items-center gap-4">
       <Button

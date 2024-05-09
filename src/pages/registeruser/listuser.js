@@ -15,7 +15,7 @@ function UserList() {
   const [loading, setLoading] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
   let { baseurl } = useContext(AppContext)
   const column = ['USERNAME','PHONE', 'EMAIL', 'BRANCH CODE', 'COMPANY CODE']
   const datakey = ['username','phone', 'email', 'brcode', 'comcode']
@@ -23,7 +23,7 @@ function UserList() {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${baseurl}/user/create-user/?page=`, {
+      const response = await axios.get(`${baseurl}/user/create-user/`, {
         params: {
           comcode: comcode,
           brcode: brcode,
@@ -40,20 +40,17 @@ function UserList() {
     }
     setLoading(false);
   };
-
   const handleSetActivePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   useEffect(() => {
     handleSearch();
   }, [brcode, comcode, userName, currentPage]);
-
-  const handleReset = () => {
-    setBrcode('');
-    setComcode('')
-    setUserName('');
-  };
+  // const handleReset = () => {
+  //   setBrcode('');
+  //   setComcode('');
+  //   setUserName('');
+  // };
   return (
     <div>
       <DashBoard />
@@ -71,7 +68,7 @@ function UserList() {
           <label className="mr-2">User Name:</label>
           <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="border rounded px-2 py-1" />
         </div>
-        <button onClick={handleReset} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Reset</button>
+        {/* <button onClick={handleReset} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Reset</button> */}
       </div>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}

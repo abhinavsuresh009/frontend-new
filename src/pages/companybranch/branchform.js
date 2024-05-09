@@ -10,19 +10,12 @@ function BranchForm() {
         handleSubmit,
         setError,
         reset,
-
         formState: { errors },
     } = useForm();
     const classes = 'form-control mt-4 block justify-between ps-2 w-full arrow_none'
     const { baseurl, comcode } = useContext(AppContext)
    
     const url = `${baseurl}/companybranch/create-branch/`;
-   
-
-    // State for branch code and error message
-    // Function to check if branch code is unique under one company
-
-    // Function to handle form submission
     const onSubmit = async (data) => {
         try {
             data.company = comcode;
@@ -35,8 +28,6 @@ function BranchForm() {
             });
             const result = await response.json();
             const values = Object.values(result);
-    
-
             if (response.status === 400 && result.error) { // Check if result.error exists
                 console.log(result.error);
                 // Ensure result.error is an object before iterating over it
@@ -52,8 +43,7 @@ function BranchForm() {
             else if (response.status === 201){
                 reset()
                 alert(result.message)
-            }
-            
+            } 
         } catch (error) {
             console.error("error:", error);
         }
@@ -62,11 +52,9 @@ function BranchForm() {
         reset()
         console.log('cancelled');
     };
-
     return (
         <div className='flex justify-center mt-10'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
-
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:p-10 p-5 md:w-1/2 w-full'>
                     <Title title="Branch"/>
                     <div className={classes}>
@@ -105,7 +93,6 @@ function BranchForm() {
                             }}
                             required
                         />
-
                     </div>
                     <div className={classes}>
                         <Input
@@ -122,7 +109,6 @@ function BranchForm() {
                                     message: "Please enter a minimum of 3 characters"
                                 }
                             }}
-
                             required
                         />
                     </div>
@@ -184,7 +170,6 @@ function BranchForm() {
                             </button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>

@@ -4,7 +4,6 @@ import Input from '../../components/Input';
 import { useForm } from "react-hook-form"
 import { Title } from '../../titles/titles';
 
-
 function RegisterForm(props) {
     const { baseurl } = useContext(AppContext)
     const url = `${baseurl}/user/create-user/`;
@@ -36,31 +35,24 @@ function RegisterForm(props) {
                         message: value
                     })
                 }
-
             }
-            else if (response.status === 201){
+            else if (response.status === 201) {
                 reset()
                 alert(result.message)
             }
-
         } catch (error) {
             console.error("Error:", error);
-
-
         }
-
     };
     const handleCancel = () => {
         reset()
         console.log('cancelled');
     };
     return (
-
         <div className='flex justify-center mt-10'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='border md:w-1/2 w-full py-10 px-5'>
-                    <Title title="Register"/>
-
+                    <Title title="Register" />
                     <div className={classes}>
                         <Input
                             style={{ textAlign: 'left' }}
@@ -99,12 +91,9 @@ function RegisterForm(props) {
 
                                 }
                             }}
-
-
                             required
                         />
                     </div>
-
                     <div className={classes}>
                         <Input
                             className='block text-gray-700 text-sm font-bold'
@@ -145,7 +134,6 @@ function RegisterForm(props) {
 
                             required
                         />
-
                     </div>
                     <div className={classes} >
                         <Input

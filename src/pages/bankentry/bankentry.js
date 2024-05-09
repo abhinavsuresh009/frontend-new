@@ -1,13 +1,15 @@
 import React from 'react';
 import DashBoard from '../../components/DashBoard';
-import PasswordResetForm from './passwordresetform';
+import BankForm from './bankentryform';
 
-function PasswordReset(props) {
+function BankEntry(props) {
     return (
         <div>
+           
             <DashBoard />
-            <PasswordResetForm />      
+            <BankForm />
         </div>
     );
 }
-export default PasswordReset;
+
+export default BankEntry;

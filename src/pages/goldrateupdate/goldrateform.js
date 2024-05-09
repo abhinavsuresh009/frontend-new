@@ -3,7 +3,7 @@ import { AppContext } from '../../context/appContext';
 import { useForm } from "react-hook-form"
 import Input from '../../components/Input';
 import { Title } from '../../titles/titles';
-
+import StableDateField from '../../components/DateField'
 function GoldRateForm(props) {
     const classes = 'form-control mt-1 flex justify-between ps-2 w-full md:w-full flex-col'
     const {
@@ -18,11 +18,7 @@ function GoldRateForm(props) {
 
 
     const onSubmit = async (data) => {
-
         console.log(data);
-        // reset();
-
-
         try {
             data.ucode = 'YOUR_PREDEFINED_UCODE_VALUE';
             data.gcode = 'YOUR_PREDEFINED_GCODE_VALUE';
@@ -48,31 +44,24 @@ function GoldRateForm(props) {
                         message: value
                     })
                 }
-
             }
             else if (response.status === 201){
                 reset()
             }
-
         } catch (error) {
             console.error("Error:", error);
-
-
         }
         // reset()
-
     };
     const handleCancel = () => {
         reset()
         console.log('cancelled');
     };
-
     return (
         <div className='flex justify-center mt-10'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:w-1/2 w-full py-10'>
                     <Title title="Gold Rate"/>
-
                     <div className={classes}>
                         <Input
                             style={{ textAlign: 'left' }}
@@ -92,7 +81,6 @@ function GoldRateForm(props) {
                             required
                         />
                     </div>
-
                     <div className={classes}>
                         <Input
                             style={{ textAlign: 'left' }}
@@ -130,17 +118,12 @@ function GoldRateForm(props) {
 
                     </div>
                     <div className={classes} >
-                        <Input
-                            style={{ textAlign: 'left' }}
-                            type="date"
+                    <StableDateField
                             name="date"
                             label="Date"
-                            errors={errors}
                             register={register}
-                            validationSchema={{
-                                required: "This field is required",
-                            }}
-
+                            errors={errors}
+                            style={{ textAlign: 'left' }}
                             required
                         />
                     </div>
@@ -157,7 +140,6 @@ function GoldRateForm(props) {
                     </div>
 
                     <div className='md:flex justify-end pr-10 sm: ml-10'>
-
                         <div className="flex justify-center mt-5 md:pr-10">
                             <button
                                 type="button"

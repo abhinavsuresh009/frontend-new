@@ -10,5 +10,4 @@ function GoldRate(props) {
         </div>
     );
 }
-
 export default GoldRate;

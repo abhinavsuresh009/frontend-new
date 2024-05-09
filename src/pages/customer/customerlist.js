@@ -5,7 +5,6 @@ import { Title } from '../../titles/titles';
 import { Table } from '../../components/table/Table';
 import Pagination from '../../components/Pagination';
 import { AppContext } from '../../context/appContext';
-
 function CustomerList() {
   const [brcode, setBrcode] = useState('');
   const [customerName, setCustomerName] = useState('');
@@ -17,8 +16,7 @@ function CustomerList() {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
-  let { baseurl } = useContext(AppContext)
-  const { comcode } = useContext(AppContext)
+  let { baseurl,comcode } = useContext(AppContext)
 
   const handleSearch = async () => {
     setLoading(true);
@@ -41,11 +39,9 @@ function CustomerList() {
     }
     setLoading(false);
   };
-
   const handleSetActivePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   useEffect(() => {
     handleSearch();
   }, [brcode, customerName, startDate, endDate, currentPage]);
@@ -61,7 +57,6 @@ function CustomerList() {
       setEndDate(e.target.value);
     }
   };
-
   // Function to handle change in end date
   const handleEndDateChange = (e) => {
     // Only update end date if it's after the selected start date
@@ -114,5 +109,4 @@ function CustomerList() {
     </div>
   );
 }
-
 export default CustomerList;

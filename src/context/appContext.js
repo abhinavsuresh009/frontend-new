@@ -7,7 +7,7 @@ function AppProvider({children}) {
     const baseurl = 'http://10.54.1.62:8000'
     const [title, setTitle] = useState('Chemm Finance Ltd')
     const [comcode,setComcode] = useState('www')
-    const [brcode, setBrcode] = useState('sssss')
+    const [brcode, setBrcode] = useState('555')
     return (
         <AppContext.Provider value={{
             baseurl,

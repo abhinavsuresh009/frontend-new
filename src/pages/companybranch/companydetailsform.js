@@ -6,8 +6,8 @@ function CompanyDetails() {
   const [companyDetails, setCompanyDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { baseurl } = useContext(AppContext)
-  const url = `${baseurl}/companybranch/company-details/www/`;
+  const { baseurl, comcode } = useContext(AppContext)
+  const url = `${baseurl}/companybranch/company-details/${comcode}/`;
 
   useEffect(() => {
     const fetchData = async () => {

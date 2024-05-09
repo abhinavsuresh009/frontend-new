@@ -14,8 +14,7 @@ function BranchList() {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
-  let { baseurl } = useContext(AppContext)
-  const {comcode} = useContext(AppContext)
+  let { baseurl, comcode } = useContext(AppContext)
   const column = ['BRANCH NAME','BRANCH CODE','ADDRESS', 'PHONE', 'EMAIL', 'COMPANY CODE']
   const datakey = ['brname','brcode', 'address', 'phone', 'email', 'company']
 
@@ -37,11 +36,9 @@ function BranchList() {
     }
     setLoading(false);
   };
-
   const handleSetActivePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   useEffect(() => {
     handleSearch();
   }, [brName, currentPage]);

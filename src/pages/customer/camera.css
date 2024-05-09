@@ -8,7 +8,9 @@
   }
 
 @media screen and (max-width: 767px) {
-   
+   #accesscam{
+    display: none;
+   }  
   
   }
   button{
