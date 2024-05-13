@@ -15,6 +15,7 @@ import UserList from './pages/registeruser/listuser';
 import CameraCapture from './pages/customer/cameraphoto';
 import CompanyDetails from './pages/companybranch/companydetailsform';
 import BankEntry from './pages/bankentry/bankentry';
+import RegisterCountry from './pages/country/countrycode';
 
 function App() {  
   return (
@@ -53,6 +54,8 @@ function App() {
           element={<CameraCapture />} />
           <Route path='bankentry' 
           element={<BankEntry />} />
+          <Route path='register-country' 
+          element={<RegisterCountry />} />
         </Routes>
       </Router>
     </div>

@@ -4,10 +4,13 @@ import { useForm } from "react-hook-form"
 import './login.css'
 import { Title } from '../../titles/titles';
 import { AppContext } from '../../context/appContext';
+import { useNavigate } from 'react-router';
+import Customer from '../customer/customer';
 
 
 function LoginForm(props) {
     const { baseurl } = useContext(AppContext);
+    const navigate = useNavigate();
     const url = `${baseurl}/user/login/`;
     const classes = 'form-control mt-4 block justify-between ps-2 w-full'
     const {
@@ -27,6 +30,10 @@ function LoginForm(props) {
                 body: JSON.stringify(data)
             })
             const result = await response.json();
+            localStorage.setItem('token', result.token);
+            navigate('/customer');
+
+            console.log(result.token)
             // reset()
             if (response.status === 400) {
                 console.log(result.error)
@@ -47,7 +54,7 @@ function LoginForm(props) {
 
             }
             else if (response.status === 201){
-                reset()
+                reset();
             }
 
         } catch (error) {

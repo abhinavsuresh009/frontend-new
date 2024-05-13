@@ -91,7 +91,7 @@ function GoldRateForm(props) {
                     {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage} />}
                     <div className={classes}>
                         <select
-                            {...register('brcode', { required: 'Branch Code is required' })}
+                            {...register('brcode')}
                             className="border h-7  form-control mt-1  w-full flex-col md:flex-row "
                         >
                             <option value="">Select Branch Code</option>

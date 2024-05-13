@@ -37,7 +37,6 @@ function DateOfBirthPicker({ name, label, register, errors} ) {
         className="form-control mt-1  ps-2 w-full flex-col md:flex-row 
         w-full px-3  text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none"
         name={name}
-        defaultValue={dateOfBirth}
         max={dateOfBirth}
         errors ={errors[name]}
         {...register(name, { required: true })}

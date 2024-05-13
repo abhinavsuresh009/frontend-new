@@ -11,18 +11,22 @@ import AlertMessage from '../../components/alert/Alert';
 function Customer(props) {
     const [selectedValue, setSelectedValue] = useState('');
     const [houseType, setHouseType] = useState('');
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false) 
+    const [otherId, setOtherId] = useState("");
     const [successMessage, setSuccessMessage] = useState()
     const { baseurl, comcode, brcode } = useContext(AppContext)
+    
     const url = `${baseurl}/customer/register-customer/`;
     const {
         register,
         setError,
         reset,
+        watch,
         handleSubmit,
         formState: { errors },
     } = useForm();
     // to generate random cusid
+    const selectedOtherId = watch("othidname");
     const generateUniqueId = () => {
         const randomNumber = Math.random().toString(36).substr(2, 6);
         return `${randomNumber}`;
@@ -80,8 +84,12 @@ function Customer(props) {
         setSelectedValue(event.target.value);
     };
     const handleSelectionChange = (event) => {
+        console.log(event.target.value);
         setHouseType(event.target.value);
     };    // To handle cancel button
+    // const handleOtherIdChange = (event) => {
+    //     setOtherId(event.target.value);
+    // };
     return (
 
         <div>
@@ -155,52 +163,40 @@ function Customer(props) {
                                 <option value="Dr.">Dr.</option>
                             </select>
                         </div>
-                        <div className=" flex justify-around w-full md:w-1/3 px-2 mb-4 mt-6 ">
+                        <div className="w-full md:w-1/3 px-2 mb-4 mt-6 ">
                             <label >
                                 <input
                                     className=''
                                     type="radio"
-                                    name="gender"
+                                    {...register("gender", { required: true })}
                                     value="male"
                                     checked={selectedValue === 'male'}
                                     onChange={handleChange}
-                                    register={register} // Use register for React Hook Form integration
                                 /> Male
                                 <input
                                     className='ml-10'
                                     type="radio"
-                                    name="gender"
+                                    {...register("gender", { required: true })}
                                     value="female"
                                     checked={selectedValue === 'female'}
                                     onChange={handleChange}
-                                    register={register} // Use register for React Hook Form integration
                                 /> Female
                                 <input
                                     className='ml-10'
                                     type="radio"
-                                    name="gender"
+                                    {...register("gender", { required: true })}
                                     value="other"
                                     checked={selectedValue === 'other'}
                                     onChange={handleChange}
-                                    register={register} // Use register for React Hook Form integration
+                                    
                                 /> Other
                             </label>
+                            {errors.gender && <p className="text-red-500 text-xs">Please select a gender</p>}
                         </div>
                         
 
                         <div className="w-full md:w-1/3 px-2 mb-4">
-                            {/* <Input
-                                style={{ textAlign: 'left' }}
-                                type="date"
-                                name="dob"
-                                label="Date of Birth"
-                                errors={errors}
-                                register={register}
-                                validationSchema={{
-                                    required: "This field is required"
-                                }}
-                                required
-                            /> */}
+                           
                             <DateOfBirthPicker
                                 style={{ textAlign: 'left' }}
                                 name="dob"
@@ -253,15 +249,16 @@ function Customer(props) {
                                 required
                             />
                         </div>
-                        <div className="w-full md:w-1/3 px-2 mb-4">
-                            <label className='ml-2'>Other Id Name</label>
-                            <select {...register("othidname")}
+                        {/* <div className="w-full md:w-1/3 px-2 mb-4">
+                            <label className='ml-2'>Other Id</label> */}
+                            {/* <select {...register("othidname")}
                                 id="othidname"
                                 name="othidname"
-                                label="Other Id Name"
+                                label="Other Id"
                                 className="w-full h-7 border mt-1 text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none"
-                                defaultValue="Choose"
-                                register={register}
+                                defaultValue=""
+                                onChange={handleOtherIdChange}
+                                {...register("othidname")}
                             >
                                 <option value="">Choose</option>
                                 <option value="Driving License">Driving License</option>
@@ -274,12 +271,38 @@ function Customer(props) {
                                 style={{ textAlign: 'left' }}
                                 type="text"
                                 name="othid"
-                                label="Other Id"
+                                label="Other Id Number"
                                 errors={errors}
                                 register={register}
+                                required={otherId !== ""}
 
                             />
+                        </div> */}
+                          <div className="w-full md:w-1/3 px-2 mb-4">
+                            <label>Other Id</label>
+                            <select
+                                className="form-control border border-solid border-gray-300 focus:border-pink-600 w-full h-6.5 mt-1 rounded"
+                                defaultValue={""}
+                                {...register("othidname")}
+                            >
+                                <option value="">Choose</option>
+                                <option value="Driving License">Driving License</option>
+                                <option value="Voter Id">Voter Id</option>
+                                <option value="Other id">Other</option>
+                            </select>
                         </div>
+                        {selectedOtherId !== "" && (
+                            <div className='w-full md:w-1/3 px-2 mb-4'>
+                                <label>Other Id Number</label>
+                                <input
+                                    type="text"
+                                    className="form-control border border-solid border-gray-300 focus:border-pink-600 w-full h-6.5 mt-1 rounded"
+                                    {...register("othid", { required: true })}
+                                />
+                                {errors.othid && <p className="text-red-500 text-xs">This field is required</p>}
+                            </div>
+                        )}
+
                         <div className="w-full md:w-1/3 px-2 mb-4 arrow_none">
                             <Input
                                 style={{ textAlign: 'left' }}
@@ -322,24 +345,25 @@ function Customer(props) {
                                 required
                             />
                         </div>
-                        <div className=" flex justify-around w-full md:w-1/3 px-2 mb-4 mt-6 ">
+                        <div className="w-full md:w-1/3 px-2 mb-4 mt-6 ">
                             <label>
                                 <input
                                     type="radio"
+                                    {...register("ownhouse", { required: true })}
                                     value="own"
                                     checked={houseType === 'own'}
                                     onChange={handleSelectionChange}
                                 /> Own House
-                            </label>
-                            <br />
-                            <label>
                                 <input
+                                className='ml-10'
                                     type="radio"
+                                    {...register("ownhouse", { required: true })}
                                     value="rented"
                                     checked={houseType === 'rented'}
                                     onChange={handleSelectionChange}
                                 /> Rented House
                             </label>
+                            {errors.gender && <p className="text-red-500 text-xs">Please select a gender</p>}
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
@@ -347,7 +371,7 @@ function Customer(props) {
                                 type="text"
                                 name="address1"
                                 maxLength={10}
-                                label="Address(Building No./House No.)"
+                                label="Address(Building No./House No./etc.)"
                                 errors={errors}
                                 register={register}
                                 validationSchema={{
@@ -362,7 +386,7 @@ function Customer(props) {
                                 style={{ textAlign: 'left' }}
                                 type="text"
                                 name="address2"
-                                label="Address(Landmark/Road)"
+                                label="Address(Landmark/Road/etc.)"
                                 errors={errors}
                                 maxLength={50}
                                 register={register}
