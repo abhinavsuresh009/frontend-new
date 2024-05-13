@@ -3,7 +3,7 @@ const classes = 'form-control text-right w-full px-3  text-gray-700 rounded bord
 const names = 'form-control text-right w-1/2 px-3  text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none'
 
 const Input = ({ name, label, register, errors, required, type, validationSchema, size,style,classnames}) => (
-    <div className="form-control mt-1  ps-2 w-full flex-col md:flex-row ">
+    <div className="form-control mt-1  w-full flex-col md:flex-row ">
       {/* <label htmlFor={name} className="block me-3 flex text-gray-700 text-sm font-bold mb-2">
         {label}
       form-control mt-1 flex justify-between ps-2 w-full flex-col md:flex-row  

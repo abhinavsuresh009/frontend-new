@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/appContext';
 import { useForm } from "react-hook-form"
 import Input from '../../components/Input';
 import { Title } from '../../titles/titles';
+import AlertMessage from '../../components/alert/Alert';
 
 function BranchForm() {
     const {
@@ -14,7 +15,8 @@ function BranchForm() {
     } = useForm();
     const classes = 'form-control mt-4 block justify-between ps-2 w-full arrow_none'
     const { baseurl, comcode } = useContext(AppContext)
-   
+    const [open, setOpen] = useState(false)
+    const [successMessage, setSuccessMessage] = useState()
     const url = `${baseurl}/companybranch/create-branch/`;
     const onSubmit = async (data) => {
         try {
@@ -29,7 +31,6 @@ function BranchForm() {
             const result = await response.json();
             const values = Object.values(result);
             if (response.status === 400 && result.error) { // Check if result.error exists
-                console.log(result.error);
                 // Ensure result.error is an object before iterating over it
                 if (typeof result.error === 'object') {
                     for (const [key, value] of Object.entries(result.error)) {
@@ -42,7 +43,9 @@ function BranchForm() {
             }
             else if (response.status === 201){
                 reset()
-                alert(result.message)
+                setSuccessMessage(result.message)
+                setOpen(true)
+
             } 
         } catch (error) {
             console.error("error:", error);
@@ -50,13 +53,13 @@ function BranchForm() {
     };
     const handleCancel = () => {
         reset()
-        console.log('cancelled');
     };
     return (
         <div className='flex justify-center mt-10'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:p-10 p-5 md:w-1/2 w-full'>
                     <Title title="Branch"/>
+                    {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage}/>}
                     <div className={classes}>
                         <Input
                             style={{ textAlign: 'left' }}

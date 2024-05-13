@@ -20,7 +20,7 @@ function NavTitle({name}) {
 function Title({title}) {
     return (
         <div>
-            <h1 className='text-black-500 text-xl mt-3 pb-6 flex justify-center font-bold custom-font'>{title}</h1>
+            <h1 className='text-black-500 text-xl mt-3 pb-6 flex justify-center custom-font'>{title}</h1>
         </div>
     )
 }

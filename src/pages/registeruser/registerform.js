@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/appContext';
 import Input from '../../components/Input';
 import { useForm } from "react-hook-form"
 import { Title } from '../../titles/titles';
+import AlertMessage from '../../components/alert/Alert';
 
 function RegisterForm(props) {
     const { baseurl } = useContext(AppContext)
     const url = `${baseurl}/user/create-user/`;
+    const [open, setOpen] = useState(false)
+    const [successMessage, setSuccessMessage] = useState()
+
     const classes = 'form-control mt-4 block justify-between ps-2 w-full arrow_none'
     const {
         register,
@@ -25,7 +29,6 @@ function RegisterForm(props) {
                 },
                 body: JSON.stringify(data)
             })
-            console.log(response)
             const result = await response.json(Object.values);
             const values = Object.values(result);
             if (response.status === 400) {
@@ -38,7 +41,9 @@ function RegisterForm(props) {
             }
             else if (response.status === 201) {
                 reset()
-                alert(result.message)
+                setSuccessMessage(result.message)
+                setOpen(true)
+
             }
         } catch (error) {
             console.error("Error:", error);
@@ -46,13 +51,13 @@ function RegisterForm(props) {
     };
     const handleCancel = () => {
         reset()
-        console.log('cancelled');
     };
     return (
         <div className='flex justify-center mt-10'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='border md:w-1/2 w-full py-10 px-5'>
                     <Title title="Register" />
+                    {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage}/>}
                     <div className={classes}>
                         <Input
                             style={{ textAlign: 'left' }}

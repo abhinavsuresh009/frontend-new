@@ -4,14 +4,17 @@ import DashBoard from '../../components/DashBoard';
 import Input from '../../components/Input';
 import { Title } from '../../titles/titles';
 import { AppContext } from '../../context/appContext';
+import DateOfBirthPicker from '../../components/DobInput';
+import AlertMessage from '../../components/alert/Alert';
 
 
 function Customer(props) {
     const [selectedValue, setSelectedValue] = useState('');
-    const { baseurl , comcode, brcode} = useContext(AppContext)
+    const [houseType, setHouseType] = useState('');
+    const [open, setOpen] = useState(false)
+    const [successMessage, setSuccessMessage] = useState()
+    const { baseurl, comcode, brcode } = useContext(AppContext)
     const url = `${baseurl}/customer/register-customer/`;
-   
-    const branchcode = `${brcode}`;
     const {
         register,
         setError,
@@ -24,11 +27,19 @@ function Customer(props) {
         const randomNumber = Math.random().toString(36).substr(2, 6);
         return `${randomNumber}`;
     };
+    //  reset form 
+    const handleCancel = () => {
+        setSelectedValue('');
+        setHouseType('');
+        reset();
+    };
+
     const onSubmit = async (data) => {
         try {
             const cusid = generateUniqueId()
             data.cusid = cusid;
             data.gender = selectedValue;
+            data.ownhouse = houseType;
             data.comcode = comcode;
             data.brcode = brcode;
             data.ucode = 'YOUR_PREDEFINED_UCODE_VALUE';
@@ -40,12 +51,10 @@ function Customer(props) {
                 },
                 body: JSON.stringify(data)
             })
-            console.log(response)
             const result = await response.json();
-           
+
 
             if (response.status === 400) {
-                console.log(typeof (result.error))
                 for (const [key, value] of Object.entries(result.error)) {
                     setError(key, {
                         type: 'server',
@@ -54,11 +63,12 @@ function Customer(props) {
                 }
 
             }
-            else if (response.status === 201){
-                reset()
-                alert(result.message)
-            }
+            else if (response.status === 201) {
+                handleCancel(); // Reset the form and radio buttons
+                setSuccessMessage(result.message)
+                setOpen(true)
 
+            }
 
         } catch (error) {
             console.error("Error:", error);
@@ -69,19 +79,17 @@ function Customer(props) {
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
-    // To handle cancel button
-    const handleCancel = () => {
-        reset()
-        console.log('cancelled');
-    };
+    const handleSelectionChange = (event) => {
+        setHouseType(event.target.value);
+    };    // To handle cancel button
     return (
 
         <div>
             <DashBoard />
             <div className="flex justify-center bg-white md:p-8 rounded-lg w-full">
                 <form className="md:border md w-full py-10" onSubmit={handleSubmit(onSubmit)}>
-                <Title title="Customer"/>
-
+                    <Title title="Customer" />
+                    {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage}/>}
                     <div className="flex flex-wrap">
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
@@ -131,7 +139,7 @@ function Customer(props) {
                         </div>
 
                         <div className="w-full md:w-1/3 px-2 mb-4">
-                            <label>Salutation</label>
+                            <label className='ml-2'>Salutation</label>
 
                             <select {...register("sal", { required: true })}
                                 id="sal"
@@ -148,7 +156,7 @@ function Customer(props) {
                             </select>
                         </div>
                         <div className=" flex justify-around w-full md:w-1/3 px-2 mb-4 mt-6 ">
-                            <label>
+                            <label >
                                 <input
                                     className=''
                                     type="radio"
@@ -178,8 +186,10 @@ function Customer(props) {
                                 /> Other
                             </label>
                         </div>
+                        
+
                         <div className="w-full md:w-1/3 px-2 mb-4">
-                            <Input
+                            {/* <Input
                                 style={{ textAlign: 'left' }}
                                 type="date"
                                 name="dob"
@@ -189,6 +199,15 @@ function Customer(props) {
                                 validationSchema={{
                                     required: "This field is required"
                                 }}
+                                required
+                            /> */}
+                            <DateOfBirthPicker
+                                style={{ textAlign: 'left' }}
+                                name="dob"
+                                label="Date of Birth"
+                                errors={errors}
+                                register={register}
+
                                 required
                             />
                         </div>
@@ -235,7 +254,7 @@ function Customer(props) {
                             />
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
-                            <label>Other Id Name</label>
+                            <label className='ml-2'>Other Id Name</label>
                             <select {...register("othidname")}
                                 id="othidname"
                                 name="othidname"
@@ -303,12 +322,32 @@ function Customer(props) {
                                 required
                             />
                         </div>
+                        <div className=" flex justify-around w-full md:w-1/3 px-2 mb-4 mt-6 ">
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="own"
+                                    checked={houseType === 'own'}
+                                    onChange={handleSelectionChange}
+                                /> Own House
+                            </label>
+                            <br />
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="rented"
+                                    checked={houseType === 'rented'}
+                                    onChange={handleSelectionChange}
+                                /> Rented House
+                            </label>
+                        </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
                                 style={{ textAlign: 'left' }}
-                                type="textarea"
+                                type="text"
                                 name="address1"
-                                label="Address1"
+                                maxLength={10}
+                                label="Address(Building No./House No.)"
                                 errors={errors}
                                 register={register}
                                 validationSchema={{
@@ -316,14 +355,16 @@ function Customer(props) {
                                 }}
                                 required
                             />
+
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
                                 style={{ textAlign: 'left' }}
-                                type="textarea"
+                                type="text"
                                 name="address2"
-                                label="Address2"
+                                label="Address(Landmark/Road)"
                                 errors={errors}
+                                maxLength={50}
                                 register={register}
                                 validationSchema={{
                                     required: "This field is required"

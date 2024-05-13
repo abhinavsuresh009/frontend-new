@@ -4,12 +4,16 @@ import Input from '../../components/Input';
 import { ClassNames } from '../../styles/style'
 import { Title } from '../../titles/titles';
 import { AppContext } from '../../context/appContext';
+import AlertMessage from '../../components/alert/Alert';
 
 
 function CompanyForm(props) {
     const classes = 'form-control mt-1 flex justify-between ps-2 w-full flex-col md:flex-row'
     const { baseurl } = useContext(AppContext)
     const url = `${baseurl}/companybranch/company/`;
+    const [open, setOpen] = useState(false)
+    const [successMessage, setSuccessMessage] = useState()
+
     const {
         register,
         setError,
@@ -36,7 +40,8 @@ function CompanyForm(props) {
                 }
             }
             else if (response.status === 201) {
-                alert(result.message)
+                setSuccessMessage(result.message)
+                setOpen(true)
                 reset()
             }
         } catch (error) {
@@ -51,6 +56,7 @@ function CompanyForm(props) {
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:p-10 p-5 md:w-1/2 w-full'>
                     <Title title="Company" />
+                    {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage}/>}
                     <Input
                         style={{ textAlign: 'left' }}
                         type="text"
