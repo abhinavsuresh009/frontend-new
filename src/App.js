@@ -4,7 +4,6 @@ import RegisterUser from './pages/registeruser/registeruser';
 import PasswordReset from './pages/passwordrest/passwordreset';
 import Login from './pages/login/login';
 import Payment from './pages/payment/payment';
-import Receipt from './pages/receipt/receipt';
 import Company from './pages/companybranch/company';
 import Branch from './pages/companybranch/branch';
 import GoldRate from './pages/goldrateupdate/goldrate';
@@ -16,6 +15,8 @@ import CameraCapture from './pages/customer/cameraphoto';
 import CompanyDetails from './pages/companybranch/companydetailsform';
 import BankEntry from './pages/bankentry/bankentry';
 import RegisterCountry from './pages/country/countrycode';
+import Receipt from './pages/receiptpayment/receipt';
+import Payments from './pages/payment/payment';
 
 function App() {  
   return (
@@ -32,8 +33,10 @@ function App() {
           element={<PasswordReset />} />
           <Route path='payment' 
           element={<Payment />} />
-          <Route path='reciept' 
+          <Route path='receipt' 
           element={<Receipt />} />
+          <Route path='payment' 
+          element={<Payments />} />
           <Route path='company' 
           element={<Company />} />
           <Route path='company-details' 
@@ -42,7 +45,7 @@ function App() {
           element={<Branch />} />
           <Route path='branchlist' 
           element={<BranchList />} />
-          <Route path='daybook' 
+          <Route path='daybook-approve' 
           element={<DayBook />} />
           <Route path='goldrate' 
           element={<GoldRate />} />

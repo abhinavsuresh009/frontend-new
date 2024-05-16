@@ -80,6 +80,13 @@ function CreateCountryForm() {
                             label="Country Code"
                             errors={errors}
                             register={register}
+                            validationSchema={{
+                                required: "This field is required",
+                                pattern: {
+                                    value: /^[0-9]+$/,              // '/^\+[0-9]+$/' + infront
+                                    message: "white space and non Nuemeric characters not allowed"
+                                }
+                            }}
                             required
                         />
                     </div>

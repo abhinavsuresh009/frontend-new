@@ -15,6 +15,7 @@ const StableDateField = ({ name, label, register, errors }) => {
         errors ={errors[name]}
         {...register(name, { required: true })}
       />
+      
       </>
   );
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Alert, Button } from "@material-tailwind/react";
 
 function AlertMessage({message, open, setOpen}) {
-    console.log(message)
     // const [open, setOpen] = React.useState(true);
     const close = () => {
         open && (setTimeout(() => {

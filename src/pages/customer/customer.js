@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useForm } from "react-hook-form"
 import DashBoard from '../../components/DashBoard';
 import Input from '../../components/Input';
@@ -15,6 +15,7 @@ function Customer(props) {
     const [otherId, setOtherId] = useState("");
     const [successMessage, setSuccessMessage] = useState()
     const { baseurl, comcode, brcode } = useContext(AppContext)
+    const [showOtherIdNumber, setShowOtherIdNumber] = useState(false);
     
     const url = `${baseurl}/customer/register-customer/`;
     const {
@@ -84,12 +85,12 @@ function Customer(props) {
         setSelectedValue(event.target.value);
     };
     const handleSelectionChange = (event) => {
-        console.log(event.target.value);
         setHouseType(event.target.value);
-    };    // To handle cancel button
-    // const handleOtherIdChange = (event) => {
-    //     setOtherId(event.target.value);
-    // };
+    };  
+    useEffect(() => {
+        // Hide Other Id Number field when page loads
+        setShowOtherIdNumber(false);
+    }, []);  
     return (
 
         <div>
@@ -147,7 +148,7 @@ function Customer(props) {
                         </div>
 
                         <div className="w-full md:w-1/3 px-2 mb-4">
-                            <label className='ml-2'>Salutation</label>
+                            <label >Salutation</label>
 
                             <select {...register("sal", { required: true })}
                                 id="sal"
@@ -249,41 +250,13 @@ function Customer(props) {
                                 required
                             />
                         </div>
-                        {/* <div className="w-full md:w-1/3 px-2 mb-4">
-                            <label className='ml-2'>Other Id</label> */}
-                            {/* <select {...register("othidname")}
-                                id="othidname"
-                                name="othidname"
-                                label="Other Id"
-                                className="w-full h-7 border mt-1 text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none"
-                                defaultValue=""
-                                onChange={handleOtherIdChange}
-                                {...register("othidname")}
-                            >
-                                <option value="">Choose</option>
-                                <option value="Driving License">Driving License</option>
-                                <option value="Voter Id">Voter Id</option>
-                                <option value="Other id">OTHER</option>
-                            </select>
-                        </div>
-                        <div className="w-full md:w-1/3 px-2 mb-4 arrow_none" >
-                            <Input
-                                style={{ textAlign: 'left' }}
-                                type="text"
-                                name="othid"
-                                label="Other Id Number"
-                                errors={errors}
-                                register={register}
-                                required={otherId !== ""}
-
-                            />
-                        </div> */}
                           <div className="w-full md:w-1/3 px-2 mb-4">
                             <label>Other Id</label>
                             <select
-                                className="form-control border border-solid border-gray-300 focus:border-pink-600 w-full h-6.5 mt-1 rounded"
-                                defaultValue={""}
+                                className="form-control text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none w-full h-6.8 mt-1 rounded"
                                 {...register("othidname")}
+                                defaultValue=""
+                                onClick={() => setShowOtherIdNumber(watch("othidname") !== "")}
                             >
                                 <option value="">Choose</option>
                                 <option value="Driving License">Driving License</option>
@@ -291,12 +264,13 @@ function Customer(props) {
                                 <option value="Other id">Other</option>
                             </select>
                         </div>
-                        {selectedOtherId !== "" && (
+                        {/* Conditionally render Other Id Number input field */}
+                        {showOtherIdNumber && (
                             <div className='w-full md:w-1/3 px-2 mb-4'>
                                 <label>Other Id Number</label>
                                 <input
                                     type="text"
-                                    className="form-control border border-solid border-gray-300 focus:border-pink-600 w-full h-6.5 mt-1 rounded"
+                                    className="form-control text-gray-700 rounded border border-solid border-gray-300 focus:border-pink-600 focus:outline-none w-full h-6.5 mt-1 rounded"
                                     {...register("othid", { required: true })}
                                 />
                                 {errors.othid && <p className="text-red-500 text-xs">This field is required</p>}
@@ -346,7 +320,7 @@ function Customer(props) {
                             />
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4 mt-6 ">
-                            <label>
+                            <label> 
                                 <input
                                     type="radio"
                                     {...register("ownhouse", { required: true })}
@@ -363,23 +337,26 @@ function Customer(props) {
                                     onChange={handleSelectionChange}
                                 /> Rented House
                             </label>
-                            {errors.gender && <p className="text-red-500 text-xs">Please select a gender</p>}
+                            {errors.gender && <p className="text-red-500 text-xs">Please select your house type</p>}
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
                                 style={{ textAlign: 'left' }}
                                 type="text"
                                 name="address1"
-                                maxLength={10}
                                 label="Address(Building No./House No./etc.)"
                                 errors={errors}
                                 register={register}
                                 validationSchema={{
-                                    required: "This field is required"
+                                    required: "This field is required",
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Only contain maximum of 50 characters"
+                                    }
                                 }}
                                 required
                             />
-
+                        {errors.address1 && <span className='text-red-500 text-xs italic'>{errors.address1.message}</span>}
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
@@ -388,13 +365,17 @@ function Customer(props) {
                                 name="address2"
                                 label="Address(Landmark/Road/etc.)"
                                 errors={errors}
-                                maxLength={50}
                                 register={register}
                                 validationSchema={{
-                                    required: "This field is required"
+                                    required: "This field is required",
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Only contain maximum of 50 characters"
+                                    }
                                 }}
                                 required
                             />
+                        {errors.address2 && <span className='text-red-500 text-xs italic'>{errors.address1.message}</span>}
                         </div>
                         <div className="w-full md:w-1/3 px-2 mb-4">
                             <Input
@@ -458,7 +439,7 @@ function Customer(props) {
                                 style={{ textAlign: 'left' }}
                                 type="text"
                                 name="description"
-                                label="Description"
+                                label="Description (optional)"
                                 errors={errors}
                                 register={register}
 

@@ -29,7 +29,7 @@ function DateOfBirthPicker({ name, label, register, errors} ) {
 
   return (
     <div>
-        <label className='ml-2'>{label}</label>
+        <label>{label}</label>
 
       <input 
         type="date" 

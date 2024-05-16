@@ -29,8 +29,9 @@ function GoldRateForm(props) {
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success) {
-                        const branchCodes = data.data.map(branch => branch.brcode);
+                        const branchCodes = data.data;
                         setBranchCodes(branchCodes);
+                        console.log(data    )
                     } else {
                         throw new Error(data.error);
                     }
@@ -41,10 +42,10 @@ function GoldRateForm(props) {
                 console.error('Error fetching branches:', error);
             }
         };
-    
+
         fetchBranches();
     }, []);
-    
+
 
     const onSubmit = async (data) => {
         try {
@@ -90,75 +91,77 @@ function GoldRateForm(props) {
                     <Title title="Gold Rate" />
                     {successMessage && open && <AlertMessage open={open} setOpen={setOpen} message={successMessage} />}
                     <div className={classes}>
+                        <label>Branch (optional)</label>
                         <select
                             {...register('brcode')}
-                            className="border h-7  form-control mt-1  w-full flex-col md:flex-row "
+                            className="border h-7 form-control mt-1 w-full flex-col md:flex-row"
                         >
-                            <option value="">Select Branch Code</option>
-                            {branchCodes.map(branchCode => (
-                                <option key={branchCode} value={branchCode}>{branchCode}</option>
+                            <option value="">Choose Branch</option>
+                            {branchCodes.map(branch => (
+                                <option key={branch.brcode} value={branch.brcode}>
+                                    {branch.brcode} - {branch.brname}
+                                </option>
                             ))}
                         </select>
-                        {errors.brcode && <span className="text-red-500">{errors.brcode.message}</span>}
-                    </div>
-                    <div className={classes}>
-                        <Input
-                            style={{ textAlign: 'left' }}
-                            type="text"
-                            name="rate"
-                            label="Rate"
-                            errors={errors}
-                            register={register}
-                            validationSchema={{
-                                required: "This field is required",
-
-                            }}
-
-                            required
-                        />
-
-                    </div>
-                    <div className={classes} >
-                        <StableDateField
-                            name="date"
-                            label="Date"
-                            register={register}
-                            errors={errors}
-                            style={{ textAlign: 'left' }}
-                            required
-                        />
-                    </div>
-                    <div className={classes}>
-                        <Input
-                            style={{ textAlign: 'left' }}
-                            type="text"
-                            name="description"
-                            label="Description"
-                            errors={errors}
-                            register={register}
-
-                        />
-                    </div>
-
-                    <div className='md:flex justify-end pr-10 sm: ml-10'>
-                        <div className="flex justify-center mt-5 md:pr-10">
-                            <button
-                                type="button"
-                                onClick={handleCancel}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >
-                                Cancel
-                            </button>
                         </div>
-                        <div className="flex justify-center mt-5">
-                            <button
-                                type="submit"
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >
-                                Submit
-                            </button>
+                        <div className={classes}>
+                            <Input
+                                style={{ textAlign: 'left' }}
+                                type="text"
+                                name="rate"
+                                label="Rate *"
+                                errors={errors}
+                                register={register}
+                                validationSchema={{
+                                    required: "This field is required",
+
+                                }}
+
+                                required
+                            />
+
                         </div>
-                    </div>
+                        <div className={classes} >
+                            <StableDateField
+                                name="date"
+                                label="Date *"
+                                register={register}
+                                errors={errors}
+                                style={{ textAlign: 'left' }}
+                                required
+                            />
+                        </div>
+                        <div className={classes}>
+                            <Input
+                                style={{ textAlign: 'left' }}
+                                type="text"
+                                name="description"
+                                label="Description (optional)"
+                                errors={errors}
+                                register={register}
+
+                            />
+                        </div>
+
+                        <div className='md:flex justify-end pr-10 sm: ml-10'>
+                            <div className="flex justify-center mt-5 md:pr-10">
+                                <button
+                                    type="button"
+                                    onClick={handleCancel}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                            <div className="flex justify-center mt-5">
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>

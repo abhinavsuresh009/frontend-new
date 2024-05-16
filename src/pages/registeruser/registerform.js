@@ -43,7 +43,6 @@ function RegisterForm(props) {
                 reset()
                 setSuccessMessage(result.message)
                 setOpen(true)
-
             }
         } catch (error) {
             console.error("Error:", error);

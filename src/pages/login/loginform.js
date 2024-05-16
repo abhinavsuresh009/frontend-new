@@ -30,19 +30,10 @@ function LoginForm(props) {
                 body: JSON.stringify(data)
             })
             const result = await response.json();
-            localStorage.setItem('token', result.token);
-            navigate('/customer');
-
-            console.log(result.token)
+            
             // reset()
-            if (response.status === 400) {
-                console.log(result.error)
-
-
-            }
-
             alert(result.message)
-
+            
             if (response.status === 400) {
                 console.log(typeof (result.error))
                 for (const [key, value] of Object.entries(result.error)) {
@@ -51,10 +42,12 @@ function LoginForm(props) {
                         message: value
                     })
                 }
-
+                
             }
-            else if (response.status === 201){
+            else if (response.status === 200){
                 reset();
+                localStorage.setItem('token', result.token);
+                navigate('/customer');
             }
 
         } catch (error) {
