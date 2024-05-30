@@ -15,8 +15,15 @@ import CameraCapture from './pages/customer/cameraphoto';
 import CompanyDetails from './pages/companybranch/companydetailsform';
 import BankEntry from './pages/bankentry/bankentry';
 import RegisterCountry from './pages/country/countrycode';
-import Receipt from './pages/receiptpayment/receipt';
 import Payments from './pages/payment/payment';
+import GoldLoan from './pages/goldrateupdate/goldloan';
+import LoanPage from './pages/goldrateupdate/loanpage';
+import LoanApplication from './pages/goldrateupdate/loanapplication';
+import LoanApplicationTwo from './pages/goldrateupdate/loanapplication2';
+import SelectTerms from './pages/goldrateupdate/termsandconditions';
+import VoucherHead from './pages/receiptpayment/voucherhead';
+import DashApp from './pages/dashboard/Daigram';
+import Receipts from './pages/receiptpayment/receipt';
 
 function App() {  
   return (
@@ -34,7 +41,7 @@ function App() {
           <Route path='payment' 
           element={<Payment />} />
           <Route path='receipt' 
-          element={<Receipt />} />
+          element={<Receipts />} />
           <Route path='payment' 
           element={<Payments />} />
           <Route path='company' 
@@ -59,6 +66,20 @@ function App() {
           element={<BankEntry />} />
           <Route path='register-country' 
           element={<RegisterCountry />} />
+          <Route path='goldloan' 
+          element={<GoldLoan />} />
+          <Route path='loanpage/*' 
+          element={<LoanPage />} />
+          <Route path='loanapplication' 
+          element={<LoanApplication />} />
+          <Route path='loanapplication2' 
+          element={<LoanApplicationTwo />} />
+          <Route path='termsandcondition/*' 
+          element={<SelectTerms />} />
+          <Route path='voucherhead' 
+          element={<VoucherHead />} />
+          <Route path='diagram' 
+          element={<DashApp />} />
         </Routes>
       </Router>
     </div>

@@ -16,15 +16,14 @@ function NavBar({sidebarToggle, setSidebarToggle}) {
             </div>
             <div className='relative'>
                 <button className='text-white group'>
-                    <FaUserCircle className='w-6 h-6 mt-1'/>
+                    <FaUserCircle className='w-6 h-6 mt-1 '/>
                     <div className='z-20 hidden absolute bg-white rounded-lg
                      shadow w-32 group-focus:block top-full right-0'>
                         <ul className='py-2 text-sm text-gray-950'>
                             <li><a href="">Profile</a></li>
                             <li><a href="">Setting</a></li>
-                            <l1><a href="">Log Out</a></l1>
+                            <li><a href="">Log Out</a></li>
                         </ul>
-
                     </div>
                 </button>
 

@@ -3,8 +3,8 @@ import { Card, Typography } from "@material-tailwind/react";
 
 export function Table({HEAD, TABLE_ROWS, datakey}) {
     return (
-      <Card className="h-full w-full overflow-scroll">
-        <table className="w-11/12 ml-auto mr-auto mt-5 border min-w-max table-auto text-left">
+      <Card className="h-full w-11/12 overflow-scroll mt-10  ml-auto mr-auto">
+        <table className="border min-w-max table-auto text-left">
           <thead>
             <tr>
               {HEAD && HEAD.map((head) => (

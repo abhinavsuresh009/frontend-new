@@ -12,6 +12,7 @@ const StableDateField = ({ name, label, register, errors }) => {
         name={name}
         defaultValue={todayDate}
         max={todayDate}
+        min={todayDate}
         errors ={errors[name]}
         {...register(name, { required: true })}
       />

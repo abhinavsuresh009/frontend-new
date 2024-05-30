@@ -13,12 +13,11 @@
    }  
   
   }
-  button{
+  #accesscam, #capture{
     background: rgb(89, 141, 220);
     border-radius: 5px;
     height: 40px;
     color: white;
-    font-weight: 700;
     padding: 4px;
 
   }

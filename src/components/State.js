@@ -169,7 +169,6 @@ function CreateStateForm() {
                 if (response.ok) {
                     const data = await response.json();
                     setCountries(data.data);
-                    console.log(data.data.country_code) // Set the fetched countries to state
                 } else {
                     throw new Error('Failed to fetch countries');
                 }
@@ -196,7 +195,6 @@ function CreateStateForm() {
             });
 
             const result = await response.json();
-            console.log('response', data);
             if (response.status === 400 && result.error) { // Check if result.error exists
                 // Ensure result.error is an object before iterating over it
                 if (typeof result.error === 'object') {

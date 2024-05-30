@@ -1,10 +1,10 @@
 import React from 'react';
 import DashBoard from '../../components/DashBoard';
 import Payment from './paymentform';
-function Payments(props) {
+function Payments(props){
     return (
         <div>
-            <DashBoard />
+            <DashBoard/>
             <Payment/>
         </div>
     );

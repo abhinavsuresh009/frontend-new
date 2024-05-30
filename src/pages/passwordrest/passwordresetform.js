@@ -54,7 +54,7 @@ function PasswordResetForm(props) {
     };
 
     return (
-        <div className='flex justify-center mt-10'>
+        <div className='flex justify-center'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:w-1/2 w-full py-10 md:px-5'>
                     <Title title="Change Password" />

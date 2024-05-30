@@ -16,7 +16,7 @@ function CustomerList() {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
-  let { baseurl,comcode } = useContext(AppContext)
+  let { baseurl, comcode } = useContext(AppContext)
 
   const handleSearch = async () => {
     setLoading(true);
@@ -27,12 +27,14 @@ function CustomerList() {
           customer_name: customerName,
           start_date: startDate,
           end_date: endDate,
-          page: currentPage
+          page:currentPage
         }
       });
       setCustomers(response.data.results.data);
       setTotalItems(response.data.count);
       setError('');
+      console.log("deyy",response.data)
+
     } catch (error) {
       setError(error.response.data.error);
       setCustomers([]);
@@ -44,7 +46,8 @@ function CustomerList() {
   };
   useEffect(() => {
     handleSearch();
-  }, [brcode, customerName, startDate, endDate, currentPage]);
+  }, [currentPage,brcode, customerName, startDate, endDate]);
+
 
   const getCurrentDate = () => {
     const currentDate = new Date().toISOString().split('T')[0];
@@ -55,6 +58,7 @@ function CustomerList() {
     // Automatically set end date to start date if it's before the selected start date
     if (endDate < e.target.value) {
       setEndDate(e.target.value);
+      setCurrentPage(1)
     }
   };
   // Function to handle change in end date
@@ -62,14 +66,17 @@ function CustomerList() {
     // Only update end date if it's after the selected start date
     if (e.target.value >= startDate) {
       setEndDate(e.target.value);
+      setCurrentPage(1)
     }
   };
+  
   const handleReset = () => {
     setStartDate('');
     setEndDate('');
     setBrcode('');
     setCustomerName('');
   };
+
   return (
     <div>
       <DashBoard />
@@ -77,15 +84,15 @@ function CustomerList() {
       <div className=" flex w-11/12 ml-auto mr-auto mt-5 text-left flex-wrap gap-x-4">
         <div className="flex items-center">
           <label className="mr-2">Branch Code:</label>
-          <input type="text" value={brcode} onChange={(e) => setBrcode(e.target.value)} className="border rounded px-2 py-1" />
+          <input type="text" value={brcode} onChange={(e) => {setBrcode(e.target.value); setCurrentPage(1);}} className="border rounded px-2 py-1" />
         </div>
         <div className="flex items-center">
           <label className="mr-2">Customer Name:</label>
-          <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="border rounded px-2 py-1" />
+          <input type="text" value={customerName} onChange={(e) => {setCustomerName(e.target.value); setCurrentPage(1);}} className="border rounded px-2 py-1" />
         </div>
         <div className="flex items-center ml-auto">
           <label className="mr-2">Start Date:</label>
-          <input type="date" value={startDate} onChange={handleStartDateChange} max={getCurrentDate()} className="border rounded px-2 py-1" />
+          <input type="date" value={startDate} onChange={handleStartDateChange} max={getCurrentDate() } className="border rounded px-2 py-1" />
         </div>
         <div className="flex items-center">
           <label className="mr-2">End Date:</label>
@@ -110,3 +117,5 @@ function CustomerList() {
   );
 }
 export default CustomerList;
+
+

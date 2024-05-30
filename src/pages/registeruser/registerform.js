@@ -4,6 +4,7 @@ import Input from '../../components/Input';
 import { useForm } from "react-hook-form"
 import { Title } from '../../titles/titles';
 import AlertMessage from '../../components/alert/Alert';
+import DashBoard from '../../components/DashBoard';
 
 function RegisterForm(props) {
     const { baseurl } = useContext(AppContext)
@@ -52,7 +53,9 @@ function RegisterForm(props) {
         reset()
     };
     return (
-        <div className='flex justify-center mt-10'>
+        <div>
+            <DashBoard/>
+        <div className='flex justify-center'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='border md:w-1/2 w-full py-10 px-5'>
                     <Title title="Register" />
@@ -221,6 +224,7 @@ function RegisterForm(props) {
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     );
 }

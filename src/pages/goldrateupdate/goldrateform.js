@@ -15,7 +15,7 @@ function GoldRateForm(props) {
         reset,
         formState: { errors },
     } = useForm();
-    const { baseurl, comcode } = useContext(AppContext)
+    const { baseurl, comcode, ucode, gcode } = useContext(AppContext)
     const [open, setOpen] = useState(false)
     const [successMessage, setSuccessMessage] = useState()
     const [branchCodes, setBranchCodes] = useState([]);
@@ -31,7 +31,6 @@ function GoldRateForm(props) {
                     if (data.success) {
                         const branchCodes = data.data;
                         setBranchCodes(branchCodes);
-                        console.log(data    )
                     } else {
                         throw new Error(data.error);
                     }
@@ -49,8 +48,8 @@ function GoldRateForm(props) {
 
     const onSubmit = async (data) => {
         try {
-            data.ucode = 'YOUR_PREDEFINED_UCODE_VALUE';
-            data.gcode = 'YOUR_PREDEFINED_GCODE_VALUE';
+            data.ucode = ucode;
+            data.gcode = gcode;
             data.comcode = `${comcode}`
 
             const response = await fetch(url, {

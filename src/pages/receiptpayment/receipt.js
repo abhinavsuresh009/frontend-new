@@ -1,13 +1,13 @@
 import React from 'react';
 import DashBoard from '../../components/DashBoard';
-import ReceiptPayment from './receiptform';
+import Receipt from './receiptform';
 
-function Receipt(props) {
+function Receipts(props) {
     return (
         <div>
             <DashBoard />
-            <ReceiptPayment/>
+            <Receipt/>
         </div>
     );
 }
-export default Receipt;
+export default Receipts;

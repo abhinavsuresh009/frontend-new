@@ -52,7 +52,7 @@ function CompanyForm(props) {
         reset()
     };
     return (
-        <div className='flex mt-10 justify-center'>
+        <div className='flex justify-center'>
             <div className="flex justify-center bg-white p-8 rounded-lg w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className='md:border md:p-10 p-5 md:w-1/2 w-full'>
                     <Title title="Company" />

@@ -8,12 +8,16 @@ function AppProvider({children}) {
     const [title, setTitle] = useState('Chemm Finance Ltd')
     const [comcode,setComcode] = useState('www')
     const [brcode, setBrcode] = useState('555')
+    const [ucode, setUsercode] = useState('555')
+    const [gcode, setGroupcode] = useState('555')
     return (
         <AppContext.Provider value={{
             baseurl,
             title,
             comcode,
-            brcode
+            brcode,
+            ucode,
+            gcode,
         }}>
             {children}
         </AppContext.Provider>

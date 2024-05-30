@@ -15,6 +15,7 @@ function SideBar({sidebarToggle}) {
         }
 
     }
+    
     return (
         <div className={` bg-gray-800 z-20 fixed h-full duration-500 ${sidebarToggle?'w-0':'w-64'} `}>
             {/* <div className='my-2 mb-4'>
